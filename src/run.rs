@@ -7,10 +7,11 @@ use crate::pathop::PathOp;
 use crate::process::{self, Process};
 use crate::signal::{self, Signal};
 use crate::watcher::{Event, Watcher};
+#[cfg(not(feature = "lib"))]
+use std::io::Write;
 use std::{
     collections::HashMap,
     fs::canonicalize,
-    io::Write,
     sync::{
         mpsc::{channel, Receiver},
         Arc, RwLock,
@@ -18,6 +19,7 @@ use std::{
     time::Duration,
 };
 
+#[cfg(not(feature = "lib"))]
 fn init_logger(debug: bool) {
     let mut log_builder = env_logger::Builder::new();
     let level = if debug {
@@ -31,6 +33,9 @@ fn init_logger(debug: bool) {
         .filter(None, level)
         .init();
 }
+
+#[cfg(feature = "lib")]
+fn init_logger(_: bool) {}
 
 pub trait Handler {
     /// Called through a manual request, such as an initial run.

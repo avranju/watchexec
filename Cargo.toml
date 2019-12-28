@@ -13,6 +13,10 @@ license = "Apache-2.0"
 exclude = ["/ci/*", "/pkg/*", "/.travis.yml", "/Makefile", "/appveyor.yml"]
 edition = "2018"
 
+[features]
+default = ["env_logger"]
+lib = []
+
 [badges]
 appveyor = { repository = "watchexec/watchexec" }
 travis-ci = { repository = "watchexec/watchexec" }
@@ -41,6 +45,7 @@ features = ["wrap_help"]
 version = "0.7.1"
 default-features = false
 features = []
+optional = true
 
 [target.'cfg(unix)'.dependencies]
 nix = "0.15.0"
